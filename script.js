@@ -4,6 +4,12 @@ const dataNumber = document.querySelectorAll("[data-number]")
 const dataOperation = document.querySelectorAll("[data-operation]")
 const dataEquals = document.querySelector("[data-equals]")
 
+
+document.addEventListener("DOMContentLoaded", function() {
+    var data = JSON.parse(localStorage.getItem('lastResult'));
+    previousDisplay.innerText = data.lastResult;
+})
+
 class Calculator {
     constructor() {
         this.lastResult = 0
@@ -77,15 +83,16 @@ class Calculator {
                     previousDisplay.innerText = result
                     display.innerText = result
 
+                    this.saveToLocalStorage(result);
                 }
             }
         })
     }
-    Localstorage(){
-        localStorage.setItem('lastResult', this.result)
+    saveToLocalStorage(result) {
+        var data = JSON.stringify({ lastResult: result });
+        localStorage.setItem('lastResult', data);
     }
 }
-
 const calculation = new Calculator()
 calculation.Condition()
 calculation.Equals()
